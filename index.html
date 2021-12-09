@@ -1,40 +1,40 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
+
+    <link rel="stylesheet" href="./styles.css" />
+
     <script src="https://kit.fontawesome.com/eb323081b8.js" crossorigin="anonymous"></script>
-    
-    
+
     <title>Prova Final Javascript</title>
 </head>
+
 <body>
     <header>
         <div>
-            <h1><a href="#">TGL</a></h1>
-            <p class="navItem"><a href="#">Home</a></p>
+            <h1>TGL</h1>
+            <p class="navItem">Home</p>
         </div>
         <div>
-            <p class="navItem"><a href="#">Account</a></p>
-            <p class="navItem"><a href="#">Log out<i class="fas fa-arrow-right"></i></a></p>
+            <p class="navItem">Account</p>
+            <p class="navItem">Log out<i class="fas fa-arrow-right"></i></p>
         </div>
     </header>
     <main>
-        <div>
-            <div>
-                <h2>NEW BET</h2>
-                <h2> FOR MEGA-SENA</h2>
-            </div>
-            <h3>Choose a game</h3>
+        <div class="gameDiv">
+            <p class="subtitle"><b>NEW BET </b> FOR MEGA-SENA</p>
+            <p class='subtitle2'>Choose a game</p>
             <div>
                 <button class="gameSelect">Lotofácil</button>
                 <button class="gameSelect">Mega-sena</button>
                 <button class="gameSelect">Lotomania</button>
             </div>
-            <h3>Fill your bet</h3>
-            <p data-js="gameDescription">description</p>
+            <p class='subtitle2'>Fill your bet</p>
+            <p data-js="gameDescription" class='subtitle2'>description</p>
             <div>
                 <table>
                     <tr>
@@ -90,7 +90,25 @@
                     <button><i class="fas fa-shopping-cart"></i>Add to card</button>
                 </div>
             </div>
+
+            <div>
+                <p>CART</p>
+                <div>
+
+                </div>
+                <div>
+                    <p>CART</p>
+                    <p> TOTAL</p>
+                    <p>17,32</p>
+                </div>
+                <div>
+                    <button>Save</button>
+                </div>
+            </div>
         </div>
     </main>
+
+    <script src="./index.js"></script>
 </body>
+
 </html>
