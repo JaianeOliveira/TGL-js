@@ -4,5 +4,10 @@
   "main": "index.js",
   "repository": "https://github.com/JaianeOliveira/provafinal.git",
   "author": "Jaiane Oliveira <jayannyjay@gmail.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "eslint": "^8.4.1",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.25.3"
+  }
 }
