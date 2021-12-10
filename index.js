@@ -4,6 +4,7 @@
     const $selectMegasena = document.querySelector('[data-js="selectMegasena"]');
     const $selectLotomania = document.querySelector('[data-js="selectLotomania"]');
 
+    const $gameDescription = document.querySelector('[data-js="gameDescription"]');
     let gameData = [];
     return {
 
@@ -15,6 +16,7 @@
           if (ajax.readyState === 4 && ajax.status === 200) {
             try {
               gameData = JSON.parse(ajax.responseText);
+              gameData = gameData.types;
               this.setDataInit();
             } catch (e) {
               console.log('ERRO');
@@ -23,8 +25,19 @@
           }
         });
       },
+      getDescription(x) {
+        $gameDescription.textContent = gameData[x].description;
+      },
       setDataInit() {
-        gameData = gameData.types;
+        $selectLotomania.addEventListener('click', () => {
+          this.getDescription(0);
+        });
+        $selectMegasena.addEventListener('click', () => {
+          this.getDescription(1);
+        });
+        $selectLotofacil.addEventListener('click', () => {
+          this.getDescription(2);
+        });
 
         $selectLotofacil.textContent = gameData[0].type;
         $selectLotofacil.style.color = gameData[0].color;
