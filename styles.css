@@ -89,7 +89,8 @@ h1 {
 }
 
 .gameSelect {
-    border: 3px solid var(--purple);
+    border: 3px solid var(--cor10);
+    color: var(--cor10);
     background-color: #FFF;
     width: 113px;
     height: 33px;
@@ -99,6 +100,10 @@ h1 {
     font-size: 14px;
     font-style: italic;
     cursor: pointer;
+}
+
+.gameSelect:hover{
+    filter: brightness(1.1);
 }
 
 .buttonBottom1 {
