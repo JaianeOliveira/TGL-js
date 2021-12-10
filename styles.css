@@ -98,6 +98,7 @@ h1 {
     font-weight: bold;
     font-size: 14px;
     font-style: italic;
+    cursor: pointer;
 }
 
 .buttonBottom1 {
@@ -109,6 +110,16 @@ h1 {
     font-size: 16px;
     font-weight: 500;
     margin-right: 25px;
+    cursor: pointer;
+    
+    transition: 0.15s ease;
+}
+.buttonBottom1:hover{
+    filter: brightness(1.03);
+}
+.buttonBottom1:active{
+    background: var(--green1);
+    color: #FFF;
 }
 
 .buttonBottom2 {
@@ -120,8 +131,14 @@ h1 {
     margin-left: 117px;
     font-size: 16px;
     font-weight: 500;
+    transition: 0.15s ease-in-out;
 }
-
+.buttonBottom2:hover{
+    filter: brightness(1.03);
+}
+.buttonBottom2:active{
+    filter: brightness(1.15);
+}
 .buttonBottom2 i {
     margin-right: 10px;
 }
@@ -155,6 +172,7 @@ h1 {
     font-weight: bold;
     font-style: italic;
     border-top: 1px solid var(--cor8);
+    cursor: pointer;
 }
 
 .cartItem {
