@@ -49,6 +49,10 @@ header div p {
     margin-left: 40px;
 }
 
+main {
+    display: flex;
+}
+
 h1 {
     font-size: 44px;
     border-bottom: 7px solid var(--titleBottomBorder);
@@ -94,4 +98,105 @@ h1 {
     font-weight: bold;
     font-size: 14px;
     font-style: italic;
+}
+
+.buttonBottom1 {
+    background: none;
+    padding: 15px;
+    border-radius: 10px;
+    border: 1px solid var(--green1);
+    color: var(--green1);
+    font-size: 16px;
+    font-weight: 500;
+    margin-right: 25px;
+}
+
+.buttonBottom2 {
+    background: var(--green1);
+    padding: 15px;
+    border-radius: 10px;
+    border: 1px solid var(--green1);
+    color: #FFF;
+    margin-left: 117px;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.buttonBottom2 i {
+    margin-right: 10px;
+}
+
+.divCart {
+    margin-top: 41.5px;
+    width: 317px;
+    height: 484px;
+    border-radius: 10px;
+    border: 1px solid var(--cor8);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.cart {
+    display: flex;
+    flex-direction: column;
+    padding: 32px 16px 47px 16px;
+    justify-content: space-between;
+    height: 100%;
+    font-size: 15px !important;
+}
+
+.divCart button {
+    width: 100%;
+    border: none;
+    height: 96px;
+    color: var(--green2);
+    font-size: 35px;
+    font-weight: bold;
+    font-style: italic;
+    border-top: 1px solid var(--cor8);
+}
+
+.cartItem {
+    display: flex;
+    height: 86px;
+}
+
+.cartItem button {
+    width: 15%;
+    color: var(--numbers);
+    background: none;
+    border: none;
+    font-size: 24px;
+}
+
+.cartItem p {
+    color: var(--subtitles);
+    font-size: 15px !important;
+    font-weight: bold;
+    font-style: italic;
+}
+
+.cartItem p span {
+    font-weight: normal;
+}
+
+.cartItemDetails {
+    border-left: 4px solid var(--purple);
+    border-radius: 5px;
+    font-size: 15px !important;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    padding-left: 10px;
+}
+
+.cartTitle {
+    color: var(--titles);
+    font-size: 24px;
+    font-style: italic;
+}
+
+.numberDetails {
+    font-size: 15px !important;
 }
