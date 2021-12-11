@@ -85,7 +85,9 @@ h1 {
 
 [data-js="gameDescription"] {
     font-weight: normal;
-    margin-top: 0;
+    margin: 10px 0;
+    padding-right: 10px;
+
 }
 
 .gameSelect {
@@ -116,7 +118,7 @@ h1 {
     font-weight: 500;
     margin-right: 25px;
     cursor: pointer;
-    
+
     transition: 0.15s ease;
 }
 .buttonBottom1:hover{
@@ -137,6 +139,7 @@ h1 {
     font-size: 16px;
     font-weight: 500;
     transition: 0.15s ease-in-out;
+    cursor: pointer;
 }
 .buttonBottom2:hover{
     filter: brightness(1.03);
@@ -222,4 +225,25 @@ h1 {
 
 .numberDetails {
     font-size: 15px !important;
+}
+
+
+.buttonNumberTable{
+    background: none;
+    border: none;
+    height: 65px;
+    width: 63px;
+    border-radius: 100%;
+    background: #ADC0C4;
+    color: white;
+    font-weight: bold;
+    margin: 8px;
+    font-size: 20px;
+}
+.buttonNumberTable:hover{
+    filter: brightness(0.95);
+}
+table{
+
+    margin-bottom: 20px;
 }

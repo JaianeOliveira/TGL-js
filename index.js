@@ -5,6 +5,7 @@
     const $selectLotomania = document.querySelector('[data-js="selectLotomania"]');
 
     const $gameDescription = document.querySelector('[data-js="gameDescription"]');
+    const $tbody = document.querySelector('tbody');
     let gameData = [];
     return {
 
@@ -25,18 +26,21 @@
           }
         });
       },
-      getDescription(x) {
-        $gameDescription.textContent = gameData[x].description;
+      getDescription(gameIndex) {
+        $gameDescription.textContent = gameData[gameIndex].description;
       },
       setDataInit() {
         $selectLotomania.addEventListener('click', () => {
-          this.getDescription(0);
+          this.getDescription(2);
+          this.createTableButtons(2);
         });
         $selectMegasena.addEventListener('click', () => {
           this.getDescription(1);
+          this.createTableButtons(1);
         });
         $selectLotofacil.addEventListener('click', () => {
-          this.getDescription(2);
+          this.getDescription(0);
+          this.createTableButtons(0);
         });
 
         $selectLotofacil.textContent = gameData[0].type;
@@ -52,6 +56,27 @@
         $selectLotomania.style.borderColor = gameData[2].color;
 
         console.log(gameData);
+      },
+
+      createTableButtons(gameIndex) {
+        $tbody.innerHTML = '';
+        const $tr = document.createElement('tr');
+        const $td = document.createElement('td');
+        let count = 0;
+        const { range } = gameData[gameIndex];
+        console.log(range);
+        while (count <= range) {
+          const text = document.createTextNode(count);
+          const $button = document.createElement('button');
+          // alterar a regra do eslint sobre a permissão de uso do ++;
+          $button.appendChild(text);
+          $td.appendChild($button);
+          $button.className = 'buttonNumberTable';
+          console.log('Criou um botão');
+          $tr.appendChild($td);
+          count += 1;
+          $tbody.appendChild($tr);
+        }
       },
     };
   };
