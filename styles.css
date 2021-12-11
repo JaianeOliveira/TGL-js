@@ -243,6 +243,7 @@ h1 {
 .buttonNumberTable:hover{
     filter: brightness(0.95);
 }
+
 table{
 
     margin-bottom: 20px;

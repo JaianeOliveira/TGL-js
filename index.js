@@ -29,6 +29,9 @@
       getDescription(gameIndex) {
         $gameDescription.textContent = gameData[gameIndex].description;
       },
+      activeButtonColor(gameIndex) {
+        return gameData[gameIndex].color;
+      },
       setDataInit() {
         $selectLotomania.addEventListener('click', () => {
           this.getDescription(2);
@@ -68,6 +71,9 @@
         while (count <= range) {
           const text = document.createTextNode(count);
           const $button = document.createElement('button');
+          $button.addEventListener('click', (e) => {
+            e.currentTarget.style.backgroundColor = this.activeButtonColor(gameIndex);
+          });
           // alterar a regra do eslint sobre a permissão de uso do ++;
           $button.appendChild(text);
           $td.appendChild($button);
