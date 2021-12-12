@@ -3,10 +3,14 @@
     const $selectLotofacil = document.querySelector('[data-js="selectLotofacil"]');
     const $selectMegasena = document.querySelector('[data-js="selectMegasena"]');
     const $selectLotomania = document.querySelector('[data-js="selectLotomania"]');
+    const $completeGame = document.querySelector('[data-js="completeGame"]');
+    const $clearGame = document.querySelector('[data-js="clearGame"]');
+    const $addToCard = document.querySelector('[data-js="addToCard"]');
 
     const $gameDescription = document.querySelector('[data-js="gameDescription"]');
     const $tbody = document.querySelector('tbody');
     let gameData = [];
+    const selectedNumbers = [];
     return {
 
       getData() {
@@ -45,7 +49,10 @@
           this.getDescription(0);
           this.createTableButtons(0);
         });
-
+        $clearGame.addEventListener('click', (e) => {
+          selectedNumbers.length = 0;
+          console.log('Array Limpo', selectedNumbers);
+        });
         $selectLotofacil.textContent = gameData[0].type;
         $selectLotofacil.style.color = gameData[0].color;
         $selectLotofacil.style.borderColor = gameData[0].color;
@@ -72,7 +79,12 @@
           const text = document.createTextNode(count);
           const $button = document.createElement('button');
           $button.addEventListener('click', (e) => {
+            if (selectedNumbers.length >= gameData[gameIndex]['max-number']) {
+              return alert('Quantidade máxima selecionada!');
+            }
             e.currentTarget.style.backgroundColor = this.activeButtonColor(gameIndex);
+            selectedNumbers.push($button.textContent);
+            console.log(selectedNumbers);
           });
           // alterar a regra do eslint sobre a permissão de uso do ++;
           $button.appendChild(text);
@@ -84,6 +96,7 @@
           $tbody.appendChild($tr);
         }
       },
+
     };
   };
 
