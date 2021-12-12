@@ -38,21 +38,21 @@
       },
       setDataInit() {
         $selectLotomania.addEventListener('click', () => {
+          selectedNumbers.length = 0;
           this.getDescription(2);
           this.createTableButtons(2);
         });
         $selectMegasena.addEventListener('click', () => {
+          selectedNumbers.length = 0;
           this.getDescription(1);
           this.createTableButtons(1);
         });
         $selectLotofacil.addEventListener('click', () => {
+          selectedNumbers.length = 0;
           this.getDescription(0);
           this.createTableButtons(0);
         });
-        $clearGame.addEventListener('click', (e) => {
-          selectedNumbers.length = 0;
-          console.log('Array Limpo', selectedNumbers);
-        });
+
         $selectLotofacil.textContent = gameData[0].type;
         $selectLotofacil.style.color = gameData[0].color;
         $selectLotofacil.style.borderColor = gameData[0].color;
@@ -67,7 +67,6 @@
 
         console.log(gameData);
       },
-
       createTableButtons(gameIndex) {
         $tbody.innerHTML = '';
         const $tr = document.createElement('tr');
@@ -78,6 +77,7 @@
         while (count <= range) {
           const text = document.createTextNode(count);
           const $button = document.createElement('button');
+          // eslint-disable-next-line consistent-return,no-loop-func
           $button.addEventListener('click', (e) => {
             if (selectedNumbers.length >= gameData[gameIndex]['max-number']) {
               return alert('Quantidade máxima selecionada!');
@@ -86,7 +86,6 @@
             selectedNumbers.push($button.textContent);
             console.log(selectedNumbers);
           });
-          // alterar a regra do eslint sobre a permissão de uso do ++;
           $button.appendChild(text);
           $td.appendChild($button);
           $button.className = 'buttonNumberTable';
@@ -94,6 +93,12 @@
           $tr.appendChild($td);
           count += 1;
           $tbody.appendChild($tr);
+
+          $clearGame.addEventListener('click', () => {
+            selectedNumbers.length = 0;
+            console.log('Array Limpo', selectedNumbers);
+            $button.style.backgroundColor = '#ADC0C4';
+          });
         }
       },
 
