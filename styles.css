@@ -152,9 +152,9 @@ h1 {
 }
 
 .divCart {
+    min-height: 484px;
     margin-top: 41.5px;
     width: 317px;
-    height: 484px;
     border-radius: 10px;
     border: 1px solid var(--cor8);
     display: flex;
@@ -165,7 +165,7 @@ h1 {
 .cart {
     display: flex;
     flex-direction: column;
-    padding: 32px 16px 47px 16px;
+    padding: 0 16px 47px 16px;
     justify-content: space-between;
     height: 100%;
     font-size: 15px !important;
@@ -208,7 +208,6 @@ h1 {
 }
 
 .cartItemDetails {
-    border-left: 4px solid var(--purple);
     border-radius: 5px;
     font-size: 15px !important;
     display: flex;
@@ -221,6 +220,8 @@ h1 {
     color: var(--titles);
     font-size: 24px;
     font-style: italic;
+
+    padding: 32px 16px 47px 16px;
 }
 
 .numberDetails {
