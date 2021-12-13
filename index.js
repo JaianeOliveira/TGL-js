@@ -8,9 +8,9 @@
     const $gameDescription = document.querySelector('[data-js="gameDescription"]');
     const $tbody = document.querySelector('tbody');
     let gameData = [];
-    const selectedNumbers = [];
-    const valorTotal = [];
-    let indicesCart = 0;
+    let selectedNumbers = [];
+    let valorTotal = [];
+    let active = false;
     return {
 
       getData() {
@@ -56,18 +56,13 @@
         $div.appendChild($clearGame);
         $div.appendChild($addToCard);
       },
-      deleteItemCart(index) {
-        console.log('VAlor TOtal', valorTotal);
-        valorTotal.splice(index, 1);
-        console.log('Novo array total', valorTotal);
-        $total.textContent = valorTotal.reduce((acc, item) => acc + item);
-      },
+
       createCartItem(gameIndex) {
+        const index = valorTotal.length - 1;
         const $cart = document.querySelector('.cart');
         const $cartItem = document.createElement('div');
         $cartItem.className = 'cartItem';
-        $cartItem.setAttribute('data-delete', String(indicesCart));
-        indicesCart += 1;
+        $cartItem.setAttribute('data-delete', index);
         const $button = document.createElement('button');
         const $icon = document.createElement('i');
         $icon.className = 'far fa-trash-alt';
@@ -86,7 +81,6 @@
         $gameName.textContent = gameData[gameIndex].type;
         $itemValue.textContent = ` R$ ${gameData[gameIndex].price}`;
         valorTotal.push(+(gameData[gameIndex].price));
-        const indice = valorTotal.length - 1;
         $total.textContent = valorTotal.reduce((acc, item) => acc + item);
         $gameName.appendChild($itemValue);
         $cartItemDetails.appendChild($gameName);
@@ -96,7 +90,8 @@
         $cart.appendChild($cartItem);
 
         $button.addEventListener('click', () => {
-          this.deleteItemCart(indice);
+          $total.textContent -= Number(gameData[gameIndex].price);
+          valorTotal = valorTotal.splice(Number($cartItem.getAttribute('data-delete')), 1);
           $cartItem.parentNode.removeChild($cartItem);
         });
       },
@@ -107,10 +102,22 @@
         return gameData[gameIndex].color;
       },
       generateRandomNumbers(gameIndex) {
-        return Math.floor(Math.random() * gameData[gameIndex].range);
+        return Math.floor(Math.random() * (gameData[gameIndex].range - 1) + 1);
+      },
+      completeGame(gameIndex) {
+        selectedNumbers.splice(0, selectedNumbers.length);
+        let count = 1;
+        while (count <= gameData[gameIndex]['max-number']) {
+          const num = this.generateRandomNumbers(gameIndex);
+          if (selectedNumbers.every((item) => item !== num)) {
+            selectedNumbers.push(num);
+            count += 1;
+          }
+          selectedNumbers.sort();
+        }
+        console.log('números aleatórios', selectedNumbers);
       },
       setButtonGameColor(gameIndex, e) {
-        let active = false;
         if (active === false) {
           e.currentTarget.style.backgroundColor = gameData[gameIndex].color;
           e.currentTarget.style.color = '#FFFFFF';
@@ -177,15 +184,11 @@
             if (selectedNumbers.length >= gameData[gameIndex]['max-number']) {
               return alert('Quantidade máxima selecionada!');
             }
-            // eslint-disable-next-line consistent-return
-            selectedNumbers.forEach((item) => {
-              if (item === $button.textContent) {
-                return alert('O número já foi selecionado');
-              }
-            });
-            e.currentTarget.style.backgroundColor = this.activeButtonColor(gameIndex);
-            selectedNumbers.push($button.textContent);
-            console.log(selectedNumbers);
+            if (selectedNumbers.every((elem) => elem !== $button.textContent)) {
+              e.currentTarget.style.backgroundColor = this.activeButtonColor(gameIndex);
+              return selectedNumbers.push($button.textContent);
+            }
+            return alert('Esse número já está selecionado');
           });
           $button.appendChild(text);
           $td.appendChild($button);
@@ -196,6 +199,13 @@
           $tbody.appendChild($tr);
 
           if (count === 25) {
+            // eslint-disable-next-line no-loop-func
+            $completeGame.addEventListener('click', () => {
+              this.completeGame(gameIndex);
+              this.createCartItem(gameIndex);
+              selectedNumbers.splice(0, selectedNumbers.length);
+              this.createTableButtons(gameIndex);
+            });
             $clearGame.addEventListener('click', () => {
               selectedNumbers.splice(0, selectedNumbers.length);
               this.createTableButtons(gameIndex);
@@ -203,6 +213,7 @@
             // eslint-disable-next-line no-loop-func
             $addToCard.addEventListener('click', () => {
               if (selectedNumbers.length === gameData[gameIndex]['max-number']) {
+                selectedNumbers = selectedNumbers.sort();
                 this.createCartItem(gameIndex);
                 selectedNumbers.splice(0, selectedNumbers.length);
                 this.createTableButtons(gameIndex);

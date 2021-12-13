@@ -26,7 +26,7 @@ body {
     width: 100vw;
     display: flex;
     flex-direction: column;
-    padding: 5vh 10vw;
+
     background-color: var(--background);
 
 }
@@ -39,6 +39,7 @@ header {
     color: var(--titles);
     font-weight: bold;
     border-bottom: 2px solid var(--divider);
+    padding: 2vh 10vw 0 10vw;
 }
 
 header div {
@@ -53,7 +54,7 @@ header div p {
 main {
     display: flex;
     flex-wrap: wrap;
-    height: 100vh;
+    padding: 5vh 10vw;
 }
 
 h1 {
@@ -175,6 +176,7 @@ h1 {
     border: 1px solid var(--cor8);
     font-size: 15px !important;
     background: white;
+    width: 317px;
 
 }
 
@@ -228,6 +230,10 @@ i {
     padding-left: 10px;
 }
 
+.numbersCart{
+    word-break: break-word;
+}
+
 .cartTitle {
     color: var(--titles);
     font-size: 24px;
@@ -264,12 +270,13 @@ table{
 }
 
 footer{
-    position: fixed;
-    display: none;
-    justify-content: center;
+    display: flex;
     color: var(--titles);
     border-top: 2px solid var(--divider);
+    font-size: 15px;
     padding-top: 30.5px;
-    max-height: 75px;
-    justify-self: flex-end;
+    padding-bottom: 30.5px;
+    align-content: center;
+    justify-content: center;
+    height: 75.5px;
 }
