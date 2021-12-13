@@ -160,6 +160,12 @@
             if (selectedNumbers.length >= gameData[gameIndex]['max-number']) {
               return alert('Quantidade máxima selecionada!');
             }
+            // eslint-disable-next-line consistent-return
+            selectedNumbers.forEach((item) => {
+              if (item === $button.textContent) {
+                return alert('O número já foi selecionado');
+              }
+            });
             e.currentTarget.style.backgroundColor = this.activeButtonColor(gameIndex);
             selectedNumbers.push($button.textContent);
             console.log(selectedNumbers);
