@@ -23,8 +23,7 @@
               gameData = gameData.types;
               this.setDataInit();
             } catch (e) {
-              console.log('ERRO');
-              console.log(e);
+              console.error(e);
             }
           }
         });
@@ -113,7 +112,6 @@
           }
           selectedNumbers.sort();
         }
-        console.log('números aleatórios', selectedNumbers);
       },
       setButtonGameColor(gameIndex, e) {
         e.currentTarget.style.backgroundColor = gameData[gameIndex].color;
@@ -162,8 +160,6 @@
         $selectQuina.style.color = gameData[2].color;
         $selectQuina.textContent = gameData[2].type;
         $selectQuina.style.borderColor = gameData[2].color;
-
-        console.log(gameData);
       },
       createTableButtons(gameIndex) {
         $tbody.innerHTML = '';
@@ -178,7 +174,6 @@
         const $td = document.createElement('td');
         let count = 1;
         const { range } = gameData[gameIndex];
-        console.log(range);
         while (count <= range) {
           const text = document.createTextNode(count);
           const $button = document.createElement('button');
@@ -196,7 +191,6 @@
           $button.appendChild(text);
           $td.appendChild($button);
           $button.className = 'buttonNumberTable';
-          console.log('Criou um botão');
           $tr.appendChild($td);
           count += 1;
           $tbody.appendChild($tr);
@@ -209,6 +203,7 @@
               selectedNumbers.splice(0, selectedNumbers.length);
               this.createTableButtons(gameIndex);
             });
+            // eslint-disable-next-line no-loop-func
             $clearGame.addEventListener('click', () => {
               selectedNumbers.splice(0, selectedNumbers.length);
               this.createTableButtons(gameIndex);
