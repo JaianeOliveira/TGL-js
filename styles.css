@@ -68,6 +68,7 @@ h1 {
     display: flex;
     flex-direction: column;
     padding-top: 73.5px;
+    padding-bottom: 145px;
 }
 
 .subtitle {
@@ -260,4 +261,15 @@ table{
 
     margin-bottom: 20px;
     margin-right: 20px;
+}
+
+footer{
+    position: fixed;
+    display: none;
+    justify-content: center;
+    color: var(--titles);
+    border-top: 2px solid var(--divider);
+    padding-top: 30.5px;
+    max-height: 75px;
+    justify-self: flex-end;
 }

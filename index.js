@@ -3,11 +3,14 @@
     const $selectLotofacil = document.querySelector('[data-js="selectLotofacil"]');
     const $selectMegasena = document.querySelector('[data-js="selectMegasena"]');
     const $selectLotomania = document.querySelector('[data-js="selectLotomania"]');
+    const $total = document.querySelector('[ data-js="total"]');
 
     const $gameDescription = document.querySelector('[data-js="gameDescription"]');
     const $tbody = document.querySelector('tbody');
     let gameData = [];
     const selectedNumbers = [];
+    const valorTotal = [];
+    let indicesCart = 0;
     return {
 
       getData() {
@@ -53,11 +56,18 @@
         $div.appendChild($clearGame);
         $div.appendChild($addToCard);
       },
-
+      deleteItemCart(index) {
+        console.log('VAlor TOtal', valorTotal);
+        valorTotal.splice(index, 1);
+        console.log('Novo array total', valorTotal);
+        $total.textContent = valorTotal.reduce((acc, item) => acc + item);
+      },
       createCartItem(gameIndex) {
         const $cart = document.querySelector('.cart');
         const $cartItem = document.createElement('div');
         $cartItem.className = 'cartItem';
+        $cartItem.setAttribute('data-delete', String(indicesCart));
+        indicesCart += 1;
         const $button = document.createElement('button');
         const $icon = document.createElement('i');
         $icon.className = 'far fa-trash-alt';
@@ -75,13 +85,20 @@
         $cartItemDetails.appendChild($numbers);
         $gameName.textContent = gameData[gameIndex].type;
         $itemValue.textContent = ` R$ ${gameData[gameIndex].price}`;
+        valorTotal.push(+(gameData[gameIndex].price));
+        const indice = valorTotal.length - 1;
+        $total.textContent = valorTotal.reduce((acc, item) => acc + item);
         $gameName.appendChild($itemValue);
         $cartItemDetails.appendChild($gameName);
 
         $cartItem.appendChild($button);
         $cartItem.appendChild($cartItemDetails);
         $cart.appendChild($cartItem);
-        console.log($cartItem);
+
+        $button.addEventListener('click', () => {
+          this.deleteItemCart(indice);
+          $cartItem.parentNode.removeChild($cartItem);
+        });
       },
       getDescription(gameIndex) {
         $gameDescription.textContent = gameData[gameIndex].description;
