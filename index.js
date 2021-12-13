@@ -2,7 +2,7 @@
   const App = () => {
     const $selectLotofacil = document.querySelector('[data-js="selectLotofacil"]');
     const $selectMegasena = document.querySelector('[data-js="selectMegasena"]');
-    const $selectLotomania = document.querySelector('[data-js="selectLotomania"]');
+    const $selectQuina = document.querySelector('[data-js="selectQuina"]');
     const $total = document.querySelector('[ data-js="total"]');
 
     const $gameDescription = document.querySelector('[data-js="gameDescription"]');
@@ -120,7 +120,7 @@
         e.currentTarget.style.color = '#FFFFFF';
       },
       setDataInit() {
-        $selectLotomania.addEventListener('click', (e) => {
+        $selectQuina.addEventListener('click', (e) => {
           selectedNumbers.splice(0, selectedNumbers.length);
           this.getDescription(2);
           this.createTableButtons(2);
@@ -137,8 +137,8 @@
           this.setButtonGameColor(1, e);
           $selectLotofacil.style.backgroundColor = '#FFFFFF';
           $selectLotofacil.style.color = gameData[0].color;
-          $selectLotomania.style.backgroundColor = '#FFFFFF';
-          $selectLotomania.style.color = gameData[2].color;
+          $selectQuina.style.backgroundColor = '#FFFFFF';
+          $selectQuina.style.color = gameData[2].color;
         });
         $selectLotofacil.addEventListener('click', (e) => {
           selectedNumbers.splice(0, selectedNumbers.length);
@@ -147,8 +147,8 @@
           this.setButtonGameColor(0, e);
           $selectMegasena.style.backgroundColor = '#FFFFFF';
           $selectMegasena.style.color = gameData[1].color;
-          $selectLotomania.style.backgroundColor = '#FFFFFF';
-          $selectLotomania.style.color = gameData[2].color;
+          $selectQuina.style.backgroundColor = '#FFFFFF';
+          $selectQuina.style.color = gameData[2].color;
         });
 
         $selectLotofacil.textContent = gameData[0].type;
@@ -159,9 +159,9 @@
         $selectMegasena.style.color = gameData[1].color;
         $selectMegasena.style.borderColor = gameData[1].color;
 
-        $selectLotomania.style.color = gameData[2].color;
-        $selectLotomania.textContent = gameData[2].type;
-        $selectLotomania.style.borderColor = gameData[2].color;
+        $selectQuina.style.color = gameData[2].color;
+        $selectQuina.textContent = gameData[2].type;
+        $selectQuina.style.borderColor = gameData[2].color;
 
         console.log(gameData);
       },
