@@ -47,6 +47,15 @@ header div {
     align-items: center;
 }
 
+.titleBar{
+    position: absolute;
+    left: 9.5vw;
+    top: 8.85vh;
+    background: #B5C401;
+    height: 7px;
+    width: 107px;
+    border-radius: 20px;
+}
 header div p {
     margin-left: 40px;
 }
@@ -59,7 +68,6 @@ main {
 
 h1 {
     font-size: 44px;
-    border-bottom: 7px solid var(--titleBottomBorder);
     border-radius: 6px;
     margin-right: 34px;
 }
@@ -148,6 +156,10 @@ h1 {
     font-size: 16px;
     font-weight: 500;
     transition: 0.15s ease-in-out;
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+    justify-content: space-between;
     cursor: pointer;
 }
 .buttonBottom2:hover{
@@ -195,11 +207,12 @@ h1 {
 .cartItem {
     display: flex;
     height: 86px;
-    padding-right: 10px;
+    padding-right: 15px;
+    padding-left: 15px;
 }
 
 .cartItem button {
-    width: 15%;
+    max-width: 45px;
     color: var(--numbers);
     background: none;
     border: none;
@@ -207,7 +220,7 @@ h1 {
 }
 i {
     margin-right: 14px;
-    margin-left: 14px;
+
 }
 
 .cartItem p {

@@ -32,25 +32,24 @@
       createBottomButtons() {
         const $div = document.querySelector('[data-js="bottomButtons"]');
         $div.innerHTML = '';
+        const $icon = document.createElement('i');
+        $icon.classList.add('fas', 'fa-shopping-cart');
         const $completeGame = document.createElement('button');
         const $clearGame = document.createElement('button');
         const $addToCard = document.createElement('button');
-        const $icon = document.createElement('i');
 
-        $icon.className = 'fas fa-shopping-cart';
         $completeGame.className = 'buttonBottom1';
         $clearGame.className = 'buttonBottom1';
         $addToCard.className = 'buttonBottom2';
-
-        $addToCard.appendChild($icon);
 
         $completeGame.setAttribute('data-js', 'completeGame');
         $clearGame.setAttribute('data-js', 'clearGame');
         $addToCard.setAttribute('data-js', 'addToCard');
 
         $completeGame.textContent = 'Complete Game';
-        $clearGame.textContent = 'Clear game';
         $addToCard.textContent = 'Add to Card';
+        $clearGame.textContent = 'Clear game';
+        $addToCard.appendChild($icon);
         $div.appendChild($completeGame);
         $div.appendChild($clearGame);
         $div.appendChild($addToCard);
