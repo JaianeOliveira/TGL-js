@@ -28,6 +28,7 @@ body {
     flex-direction: column;
     padding: 5vh 10vw;
     background-color: var(--background);
+
 }
 
 header {
@@ -51,6 +52,8 @@ header div p {
 
 main {
     display: flex;
+    flex-wrap: wrap;
+    height: 100vh;
 }
 
 h1 {
@@ -61,8 +64,7 @@ h1 {
 }
 
 .gameDiv {
-    width: 55vw;
-    height: 100vh;
+    width: 60%;
     display: flex;
     flex-direction: column;
     padding-top: 73.5px;
@@ -128,14 +130,19 @@ h1 {
     background: var(--green1);
     color: #FFF;
 }
-
+[data-js="bottomButtons"]{
+    display: flex;
+    justify-content: flex-start;
+    width: 100%;
+    padding-right: 20px;
+}
 .buttonBottom2 {
     background: var(--green1);
     padding: 15px;
     border-radius: 10px;
     border: 1px solid var(--green1);
     color: #FFF;
-    margin-left: 117px;
+    margin-left: auto;
     font-size: 16px;
     font-weight: 500;
     transition: 0.15s ease-in-out;
@@ -152,23 +159,22 @@ h1 {
 }
 
 .divCart {
-    min-height: 484px;
+    align-content: flex-start;
     margin-top: 41.5px;
-    width: 317px;
-    border-radius: 10px;
-    border: 1px solid var(--cor8);
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+
 }
 
-.cart {
+.cartContainer {
     display: flex;
     flex-direction: column;
-    padding: 0 16px 47px 16px;
-    justify-content: space-between;
-    height: 100%;
+    justify-content: flex-start;
+    border-radius: 10px;
+    border: 1px solid var(--cor8);
     font-size: 15px !important;
+    background: white;
+
 }
 
 .divCart button {
@@ -186,6 +192,7 @@ h1 {
 .cartItem {
     display: flex;
     height: 86px;
+    padding-right: 10px;
 }
 
 .cartItem button {
@@ -194,6 +201,10 @@ h1 {
     background: none;
     border: none;
     font-size: 24px;
+}
+i {
+    margin-right: 14px;
+    margin-left: 14px;
 }
 
 .cartItem p {
@@ -248,4 +259,5 @@ h1 {
 table{
 
     margin-bottom: 20px;
+    margin-right: 20px;
 }
