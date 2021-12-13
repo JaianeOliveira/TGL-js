@@ -3,9 +3,6 @@
     const $selectLotofacil = document.querySelector('[data-js="selectLotofacil"]');
     const $selectMegasena = document.querySelector('[data-js="selectMegasena"]');
     const $selectLotomania = document.querySelector('[data-js="selectLotomania"]');
-    const $completeGame = document.querySelector('[data-js="completeGame"]');
-    const $clearGame = document.querySelector('[data-js="clearGame"]');
-    const $addToCard = document.querySelector('[data-js="addToCard"]');
 
     const $gameDescription = document.querySelector('[data-js="gameDescription"]');
     const $tbody = document.querySelector('tbody');
@@ -29,6 +26,32 @@
             }
           }
         });
+      },
+      createBottomButtons() {
+        const $div = document.querySelector('[data-js="bottomButtons"]');
+        $div.innerHTML = '';
+        const $completeGame = document.createElement('button');
+        const $clearGame = document.createElement('button');
+        const $addToCard = document.createElement('button');
+        const $icon = document.createElement('i');
+
+        $icon.className = 'fas fa-shopping-cart';
+        $completeGame.className = 'buttonBottom1';
+        $clearGame.className = 'buttonBottom1';
+        $addToCard.className = 'buttonBottom2';
+
+        $addToCard.appendChild($icon);
+
+        $completeGame.setAttribute('data-js', 'completeGame');
+        $clearGame.setAttribute('data-js', 'clearGame');
+        $addToCard.setAttribute('data-js', 'addToCard');
+
+        $completeGame.textContent = 'Complete Game';
+        $clearGame.textContent = 'Clear game';
+        $addToCard.textContent = 'Add to Card';
+        $div.appendChild($completeGame);
+        $div.appendChild($clearGame);
+        $div.appendChild($addToCard);
       },
 
       createCartItem(gameIndex) {
@@ -70,8 +93,16 @@
         return Math.floor(Math.random() * gameData[gameIndex].range);
       },
       setButtonGameColor(gameIndex, e) {
-        e.currentTarget.style.backgroundColor = gameData[gameIndex].color;
-        e.currentTarget.style.color = '#FFFFFF';
+        let active = false;
+        if (active === false) {
+          e.currentTarget.style.backgroundColor = gameData[gameIndex].color;
+          e.currentTarget.style.color = '#FFFFFF';
+          active = true;
+        } else {
+          e.currentTarget.style.backgroundColor = '#FFFFFF';
+          e.currentTarget.style.color = gameData[gameIndex].color;
+          active = false;
+        }
       },
       setDataInit() {
         $selectLotomania.addEventListener('click', (e) => {
@@ -109,6 +140,13 @@
       },
       createTableButtons(gameIndex) {
         $tbody.innerHTML = '';
+
+        this.createBottomButtons();
+
+        const $completeGame = document.querySelector('[data-js="completeGame"]');
+        const $clearGame = document.querySelector('[data-js="clearGame"]');
+        const $addToCard = document.querySelector('[data-js="addToCard"]');
+
         const $tr = document.createElement('tr');
         const $td = document.createElement('td');
         let count = 1;
@@ -137,11 +175,17 @@
           if (count === 25) {
             $clearGame.addEventListener('click', () => {
               selectedNumbers.splice(0, selectedNumbers.length);
-              $button.style.backgroundColor = '#ADC0C4';
+              this.createTableButtons(gameIndex);
             });
+            // eslint-disable-next-line no-loop-func
             $addToCard.addEventListener('click', () => {
-              this.createCartItem(gameIndex);
-              selectedNumbers.splice(0, selectedNumbers.length);
+              if (selectedNumbers.length === gameData[gameIndex]['max-number']) {
+                this.createCartItem(gameIndex);
+                selectedNumbers.splice(0, selectedNumbers.length);
+                this.createTableButtons(gameIndex);
+              } else {
+                alert(`Escolha mais ${(gameData[gameIndex]['max-number']) - (selectedNumbers.length)} números`);
+              }
             });
           }
         }
