@@ -10,7 +10,6 @@
     let gameData = [];
     let selectedNumbers = [];
     let valorTotal = [];
-    let active = false;
     return {
 
       getData() {
@@ -118,15 +117,8 @@
         console.log('números aleatórios', selectedNumbers);
       },
       setButtonGameColor(gameIndex, e) {
-        if (active === false) {
-          e.currentTarget.style.backgroundColor = gameData[gameIndex].color;
-          e.currentTarget.style.color = '#FFFFFF';
-          active = true;
-        } else {
-          e.currentTarget.style.backgroundColor = '#FFFFFF';
-          e.currentTarget.style.color = gameData[gameIndex].color;
-          active = false;
-        }
+        e.currentTarget.style.backgroundColor = gameData[gameIndex].color;
+        e.currentTarget.style.color = '#FFFFFF';
       },
       setDataInit() {
         $selectLotomania.addEventListener('click', (e) => {
@@ -134,18 +126,30 @@
           this.getDescription(2);
           this.createTableButtons(2);
           this.setButtonGameColor(2, e);
+          $selectMegasena.style.backgroundColor = '#FFFFFF';
+          $selectMegasena.style.color = gameData[1].color;
+          $selectLotofacil.style.backgroundColor = '#FFFFFF';
+          $selectLotofacil.style.color = gameData[0].color;
         });
         $selectMegasena.addEventListener('click', (e) => {
           selectedNumbers.splice(0, selectedNumbers.length);
           this.getDescription(1);
           this.createTableButtons(1);
           this.setButtonGameColor(1, e);
+          $selectLotofacil.style.backgroundColor = '#FFFFFF';
+          $selectLotofacil.style.color = gameData[0].color;
+          $selectLotomania.style.backgroundColor = '#FFFFFF';
+          $selectLotomania.style.color = gameData[2].color;
         });
         $selectLotofacil.addEventListener('click', (e) => {
           selectedNumbers.splice(0, selectedNumbers.length);
           this.getDescription(0);
           this.createTableButtons(0);
           this.setButtonGameColor(0, e);
+          $selectMegasena.style.backgroundColor = '#FFFFFF';
+          $selectMegasena.style.color = gameData[1].color;
+          $selectLotomania.style.backgroundColor = '#FFFFFF';
+          $selectLotomania.style.color = gameData[2].color;
         });
 
         $selectLotofacil.textContent = gameData[0].type;
