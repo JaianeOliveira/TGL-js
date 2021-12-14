@@ -4,9 +4,9 @@
     const $selectMegasena = document.querySelector('[data-js="selectMegasena"]');
     const $selectQuina = document.querySelector('[data-js="selectQuina"]');
     const $total = document.querySelector('[ data-js="total"]');
-
     const $gameDescription = document.querySelector('[data-js="gameDescription"]');
     const $tbody = document.querySelector('tbody');
+
     let gameData = [];
     let selectedNumbers = [];
     let valorTotal = [];
@@ -14,13 +14,16 @@
 
       getData() {
         const ajax = new XMLHttpRequest();
+
         ajax.open('GET', './games.json');
         ajax.send();
+
         ajax.addEventListener('readystatechange', () => {
           if (ajax.readyState === 4 && ajax.status === 200) {
             try {
               gameData = JSON.parse(ajax.responseText);
               gameData = gameData.types;
+
               this.setDataInit();
             } catch (e) {
               console.error(e);
@@ -28,15 +31,33 @@
           }
         });
       },
+
+      newElement(elem) {
+        return document.createElement(elem);
+      },
+
+      getDescription(gameIndex) {
+        $gameDescription.textContent = gameData[gameIndex].description;
+      },
+
+      activeButtonColor(gameIndex) {
+        return gameData[gameIndex].color;
+      },
+
+      generateRandomNumbers(gameIndex) {
+        return Math.floor(Math.random() * (gameData[gameIndex].range - 1) + 1);
+      },
+
       createBottomButtons() {
         const $div = document.querySelector('[data-js="bottomButtons"]');
-        $div.innerHTML = '';
-        const $icon = document.createElement('i');
-        $icon.classList.add('fas', 'fa-shopping-cart');
-        const $completeGame = document.createElement('button');
-        const $clearGame = document.createElement('button');
-        const $addToCard = document.createElement('button');
+        const $icon = this.newElement('i');
+        const $completeGame = this.newElement('button');
+        const $clearGame = this.newElement('button');
+        const $addToCard = this.newElement('button');
 
+        $div.innerHTML = '';
+
+        $icon.classList.add('fas', 'fa-shopping-cart');
         $completeGame.className = 'buttonBottom1';
         $clearGame.className = 'buttonBottom1';
         $addToCard.className = 'buttonBottom2';
@@ -48,6 +69,7 @@
         $completeGame.textContent = 'Complete Game';
         $addToCard.textContent = 'Add to Card';
         $clearGame.textContent = 'Clear game';
+
         $addToCard.appendChild($icon);
         $div.appendChild($completeGame);
         $div.appendChild($clearGame);
@@ -55,52 +77,41 @@
       },
 
       createCartItem(gameIndex) {
-        const index = valorTotal.length - 1;
         const $cart = document.querySelector('.cart');
-        const $cartItem = document.createElement('div');
-        $cartItem.className = 'cartItem';
-        $cartItem.setAttribute('data-delete', index);
-        const $button = document.createElement('button');
-        const $icon = document.createElement('i');
+        const $cartItem = this.newElement('div');
+        const $button = this.newElement('button');
+        const $icon = this.newElement('i');
+        const $cartItemDetails = this.newElement('div');
+        const $numbers = this.newElement('p');
+        const $gameName = this.newElement('p');
+        const $itemValue = this.newElement('span');
+
         $icon.className = 'far fa-trash-alt';
-        const $cartItemDetails = document.createElement('div');
+        $cartItem.className = 'cartItem';
         $cartItemDetails.className = 'cartItemDetails';
         $cartItemDetails.style.borderLeft = `4px solid ${gameData[gameIndex].color}`;
-        const $numbers = document.createElement('p');
         $numbers.className = 'numbersCart';
-        const $gameName = document.createElement('p');
-        $gameName.className = 'otherDetailsCart';
-        const $itemValue = document.createElement('span');
 
         $button.appendChild($icon);
         $numbers.textContent = selectedNumbers;
         $cartItemDetails.appendChild($numbers);
         $gameName.textContent = gameData[gameIndex].type;
         $itemValue.textContent = ` R$ ${gameData[gameIndex].price}`;
-        valorTotal.push(+(gameData[gameIndex].price));
-        $total.textContent = valorTotal.reduce((acc, item) => acc + item);
+        valorTotal += gameData[gameIndex].price;
+        $total.textContent = valorTotal;
         $gameName.appendChild($itemValue);
         $cartItemDetails.appendChild($gameName);
-
         $cartItem.appendChild($button);
         $cartItem.appendChild($cartItemDetails);
         $cart.appendChild($cartItem);
 
         $button.addEventListener('click', () => {
-          $total.textContent -= Number(gameData[gameIndex].price);
-          valorTotal = valorTotal.splice(Number($cartItem.getAttribute('data-delete')), 1);
+          valorTotal -= gameData[gameIndex].price;
+          $total.textContent = valorTotal;
           $cartItem.parentNode.removeChild($cartItem);
         });
       },
-      getDescription(gameIndex) {
-        $gameDescription.textContent = gameData[gameIndex].description;
-      },
-      activeButtonColor(gameIndex) {
-        return gameData[gameIndex].color;
-      },
-      generateRandomNumbers(gameIndex) {
-        return Math.floor(Math.random() * (gameData[gameIndex].range - 1) + 1);
-      },
+
       completeGame(gameIndex) {
         selectedNumbers.splice(0, selectedNumbers.length);
         let count = 1;
@@ -113,10 +124,12 @@
           selectedNumbers.sort();
         }
       },
+
       setButtonGameColor(gameIndex, e) {
         e.currentTarget.style.backgroundColor = gameData[gameIndex].color;
         e.currentTarget.style.color = '#FFFFFF';
       },
+
       setDataInit() {
         $selectQuina.addEventListener('click', (e) => {
           selectedNumbers.splice(0, selectedNumbers.length);
@@ -161,6 +174,7 @@
         $selectQuina.textContent = gameData[2].type;
         $selectQuina.style.borderColor = gameData[2].color;
       },
+
       createTableButtons(gameIndex) {
         $tbody.innerHTML = '';
 
@@ -170,13 +184,13 @@
         const $clearGame = document.querySelector('[data-js="clearGame"]');
         const $addToCard = document.querySelector('[data-js="addToCard"]');
 
-        const $tr = document.createElement('tr');
-        const $td = document.createElement('td');
+        const $tr = this.newElement('tr');
+        const $td = this.newElement('td');
         let count = 1;
         const { range } = gameData[gameIndex];
         while (count <= range) {
           const text = document.createTextNode(count);
-          const $button = document.createElement('button');
+          const $button = this.newElement('button');
           // eslint-disable-next-line consistent-return,no-loop-func
           $button.addEventListener('click', (e) => {
             if (selectedNumbers.length >= gameData[gameIndex]['max-number']) {
@@ -222,7 +236,6 @@
           }
         }
       },
-
     };
   };
 
