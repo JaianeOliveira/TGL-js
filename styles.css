@@ -243,10 +243,13 @@ i {
     flex-direction: column;
     justify-content: space-evenly;
     padding-left: 10px;
+    white-space: pre-wrap;
 }
 
 .numbersCart{
     word-break: break-word;
+
+;
 }
 
 .cartTitle {
