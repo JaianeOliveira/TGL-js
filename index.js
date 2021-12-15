@@ -29,6 +29,18 @@
         });
 
         this.createTopButtons();
+        this.cartIsEmpty();
+      },
+      cartIsEmpty() {
+        const $cart = document.querySelector('.cart');
+        const $item = document.querySelector('.cartItem');
+
+        if ($item === null) {
+          const $emptyMensage = this.newElement('p');
+          $emptyMensage.className = 'emptyMensage';
+          $emptyMensage.textContent = 'O carrinho está vazio';
+          $cart.appendChild($emptyMensage);
+        }
       },
 
       newElement(elem) {
@@ -142,6 +154,7 @@
           valorTotal -= gameData[gameIndex].price;
           $total.textContent = valorTotal;
           $cartItem.parentNode.removeChild($cartItem);
+          this.cartIsEmpty();
         });
       },
 
@@ -240,6 +253,12 @@
           if (count === 25) {
             // eslint-disable-next-line no-loop-func
             $completeGame.addEventListener('click', () => {
+              const $cart = document.querySelector('.cart');
+              const $cartItem = document.querySelector('.cartItem');
+              if ($cartItem === null) {
+                const $emptyMensage = document.querySelector('.emptyMensage');
+                $cart.removeChild($emptyMensage);
+              }
               this.completeGame(gameIndex);
               this.createCartItem(gameIndex);
               selectedNumbers.splice(0, selectedNumbers.length);
@@ -253,6 +272,12 @@
             // eslint-disable-next-line no-loop-func
             $addToCard.addEventListener('click', () => {
               if (selectedNumbers.length === gameData[gameIndex]['max-number']) {
+                const $cart = document.querySelector('.cart');
+                const $cartItem = document.querySelector('.cartItem');
+                if ($cartItem === null) {
+                  const $emptyMensage = document.querySelector('.emptyMensage');
+                  $cart.removeChild($emptyMensage);
+                }
                 selectedNumbers = selectedNumbers.sort();
                 this.createCartItem(gameIndex);
                 selectedNumbers.splice(0, selectedNumbers.length);
