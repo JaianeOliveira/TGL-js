@@ -6,7 +6,7 @@
 
     let gameData = [];
     let selectedNumbers = [];
-    let valorTotal = [];
+    let valorTotal = 0;
     return {
       getData() {
         const ajax = new XMLHttpRequest();
@@ -31,6 +31,7 @@
         this.createTopButtons();
         this.cartIsEmpty();
       },
+
       cartIsEmpty() {
         const $cart = document.querySelector('.cart');
         const $item = document.querySelector('.cartItem');
@@ -141,9 +142,9 @@
         $numbers.textContent = selectedNumbers.sort((a, b) => a - b);
         $cartItemDetails.appendChild($numbers);
         $gameName.textContent = gameData[gameIndex].type;
-        $itemValue.textContent = ` R$ ${gameData[gameIndex].price}`;
-        valorTotal += gameData[gameIndex].price;
-        $total.textContent = valorTotal;
+        $itemValue.textContent = ` R$ ${gameData[gameIndex].price.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })}`;
+        valorTotal += Number(gameData[gameIndex].price);
+        $total.textContent = (valorTotal.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' }));
         $gameName.appendChild($itemValue);
         $cartItemDetails.appendChild($gameName);
         $cartItem.appendChild($button);
@@ -152,7 +153,7 @@
 
         $button.addEventListener('click', () => {
           valorTotal -= gameData[gameIndex].price;
-          $total.textContent = valorTotal;
+          $total.textContent = valorTotal.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' });
           $cartItem.parentNode.removeChild($cartItem);
           this.cartIsEmpty();
         });
@@ -170,51 +171,6 @@
           selectedNumbers.sort();
         }
       },
-
-      /* setDataInit() {
-        $selectQuina.addEventListener('click', (e) => {
-          selectedNumbers.splice(0, selectedNumbers.length);
-          this.getDescription(2);
-          this.createTableButtons(2);
-          this.setButtonGameColor(2, e);
-          $selectMegasena.style.backgroundColor = '#FFFFFF';
-          $selectMegasena.style.color = gameData[1].color;
-          $selectLotofacil.style.backgroundColor = '#FFFFFF';
-          $selectLotofacil.style.color = gameData[0].color;
-        });
-        $selectMegasena.addEventListener('click', (e) => {
-          selectedNumbers.splice(0, selectedNumbers.length);
-          this.getDescription(1);
-          this.createTableButtons(1);
-          this.setButtonGameColor(1, e);
-          $selectLotofacil.style.backgroundColor = '#FFFFFF';
-          $selectLotofacil.style.color = gameData[0].color;
-          $selectQuina.style.backgroundColor = '#FFFFFF';
-          $selectQuina.style.color = gameData[2].color;
-        });
-        $selectLotofacil.addEventListener('click', (e) => {
-          selectedNumbers.splice(0, selectedNumbers.length);
-          this.getDescription(0);
-          this.createTableButtons(0);
-          this.setButtonGameColor(0, e);
-          $selectMegasena.style.backgroundColor = '#FFFFFF';
-          $selectMegasena.style.color = gameData[1].color;
-          $selectQuina.style.backgroundColor = '#FFFFFF';
-          $selectQuina.style.color = gameData[2].color;
-        });
-
-        $selectLotofacil.textContent = gameData[0].type;
-        $selectLotofacil.style.color = gameData[0].color;
-        $selectLotofacil.style.borderColor = gameData[0].color;
-
-        $selectMegasena.textContent = gameData[1].type;
-        $selectMegasena.style.color = gameData[1].color;
-        $selectMegasena.style.borderColor = gameData[1].color;
-
-        $selectQuina.style.color = gameData[2].color;
-        $selectQuina.textContent = gameData[2].type;
-        $selectQuina.style.borderColor = gameData[2].color;
-      }, */
 
       createTableButtons(gameIndex) {
         $tbody.innerHTML = '';
