@@ -71,7 +71,9 @@ h1 {
     border-radius: 6px;
     margin-right: 34px;
 }
-
+[data-js="nameGame"]{
+    text-transform: uppercase;
+}
 .gameDiv {
     width: 60%;
     display: flex;

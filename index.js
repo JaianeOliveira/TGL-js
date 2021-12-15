@@ -1,8 +1,5 @@
 (() => {
   const App = () => {
-    const $selectLotofacil = document.querySelector('[data-js="selectLotofacil"]');
-    const $selectMegasena = document.querySelector('[data-js="selectMegasena"]');
-    const $selectQuina = document.querySelector('[data-js="selectQuina"]');
     const $total = document.querySelector('[ data-js="total"]');
     const $gameDescription = document.querySelector('[data-js="gameDescription"]');
     const $tbody = document.querySelector('tbody');
@@ -11,7 +8,6 @@
     let selectedNumbers = [];
     let valorTotal = [];
     return {
-
       getData() {
         const ajax = new XMLHttpRequest();
 
@@ -24,12 +20,15 @@
               gameData = JSON.parse(ajax.responseText);
               gameData = gameData.types;
 
-              this.setDataInit();
+              this.createTopButtons();
+              this.functionInit(0, `select${gameData[0].type}`);
             } catch (e) {
               console.error(e);
             }
           }
         });
+
+        this.createTopButtons();
       },
 
       newElement(elem) {
@@ -46,6 +45,40 @@
 
       generateRandomNumbers(gameIndex) {
         return Math.floor(Math.random() * (gameData[gameIndex].range - 1) + 1);
+      },
+
+      setButtonGameColor(gameIndex, name) {
+        document.querySelectorAll('.gameSelect').forEach((item, index) => {
+          // eslint-disable-next-line no-param-reassign
+          item.style.backgroundColor = '#FFFFFF';
+          // eslint-disable-next-line no-param-reassign
+          item.style.color = gameData[index].color;
+        });
+        document.querySelector(`[data-js=${name}]`).style.backgroundColor = gameData[gameIndex].color;
+        document.querySelector(`[data-js=${name}]`).style.color = '#FFFFFF';
+      },
+
+      functionInit(gameIndex, e) {
+        const $gameName = document.querySelector('[data-js="nameGame"]');
+        $gameName.textContent = gameData[gameIndex].type;
+        this.getDescription(gameIndex);
+        this.createTableButtons(gameIndex);
+        this.setButtonGameColor(gameIndex, e);
+      },
+
+      createTopButtons() {
+        const $topButtonDiv = document.querySelector('.topButtons');
+        console.log(gameData.length);
+        gameData.forEach((item, index) => {
+          const $button = this.newElement('button');
+          $button.setAttribute('data-js', `select${item.type}`);
+          $button.className = 'gameSelect';
+          $button.style.borderColor = item.color;
+          $button.style.color = item.color;
+          $button.textContent = item.type;
+          $button.addEventListener('click', this.functionInit.bind(this, index, `select${item.type}`));
+          $topButtonDiv.appendChild($button);
+        });
       },
 
       createBottomButtons() {
@@ -125,12 +158,7 @@
         }
       },
 
-      setButtonGameColor(gameIndex, e) {
-        e.currentTarget.style.backgroundColor = gameData[gameIndex].color;
-        e.currentTarget.style.color = '#FFFFFF';
-      },
-
-      setDataInit() {
+      /* setDataInit() {
         $selectQuina.addEventListener('click', (e) => {
           selectedNumbers.splice(0, selectedNumbers.length);
           this.getDescription(2);
@@ -173,7 +201,7 @@
         $selectQuina.style.color = gameData[2].color;
         $selectQuina.textContent = gameData[2].type;
         $selectQuina.style.borderColor = gameData[2].color;
-      },
+      }, */
 
       createTableButtons(gameIndex) {
         $tbody.innerHTML = '';
