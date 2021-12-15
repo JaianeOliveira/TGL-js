@@ -126,7 +126,7 @@
         $numbers.className = 'numbersCart';
 
         $button.appendChild($icon);
-        $numbers.textContent = selectedNumbers;
+        $numbers.textContent = selectedNumbers.sort((a, b) => a - b);
         $cartItemDetails.appendChild($numbers);
         $gameName.textContent = gameData[gameIndex].type;
         $itemValue.textContent = ` R$ ${gameData[gameIndex].price}`;
