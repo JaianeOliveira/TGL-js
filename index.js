@@ -5,8 +5,10 @@
     const $tbody = document.querySelector('tbody');
 
     let gameData = [];
-    let selectedNumbers = [];
+    const selectedNumbers = [];
     let valorTotal = 0;
+    const apostas = [];
+    let ap = [];
     return {
       getData() {
         const ajax = new XMLHttpRequest();
@@ -77,6 +79,7 @@
         this.getDescription(gameIndex);
         this.createTableButtons(gameIndex);
         this.setButtonGameColor(gameIndex, e);
+        selectedNumbers.splice(0, selectedNumbers.length);
       },
 
       createTopButtons() {
@@ -121,8 +124,16 @@
         $div.appendChild($clearGame);
         $div.appendChild($addToCard);
       },
-
+      /*   getId(gameIndex) {
+        // eslint-disable-next-line max-len
+        const id = apostas.findIndex((item) => item.aposta.every((elem, index) => elem === +(selectedNumbers[index]) && item.name === gameData[gameIndex].type));
+        if (id === -1) {
+          return 0;
+        }
+        return id;
+      }, */
       createCartItem(gameIndex) {
+        console.log(apostas);
         const $cart = document.querySelector('.cart');
         const $cartItem = this.newElement('div');
         const $button = this.newElement('button');
@@ -151,10 +162,16 @@
         $cartItem.appendChild($cartItemDetails);
         $cart.appendChild($cartItem);
 
+        console.log(console.log($cartItem));
         $button.addEventListener('click', () => {
           valorTotal -= gameData[gameIndex].price;
           $total.textContent = valorTotal.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' });
+          /* // eslint-disable-next-line max-len
+          console.log(this.getId(gameIndex));
+          apostas.splice((this.getId(gameIndex)), 1);
+          console.log(apostas); */
           $cartItem.parentNode.removeChild($cartItem);
+
           this.cartIsEmpty();
         });
       },
@@ -168,8 +185,12 @@
             selectedNumbers.push(num);
             count += 1;
           }
-          selectedNumbers.sort();
         }
+      },
+
+      existe(gameIndex) {
+        // eslint-disable-next-line max-len
+        return apostas.some((item) => item.aposta.every((elem, index) => elem === ap[index] && item.name === gameData[gameIndex].type));
       },
 
       createTableButtons(gameIndex) {
@@ -216,16 +237,33 @@
                 $cart.removeChild($emptyMensage);
               }
               this.completeGame(gameIndex);
-              this.createCartItem(gameIndex);
-              selectedNumbers.splice(0, selectedNumbers.length);
-              this.createTableButtons(gameIndex);
+
+              ap = selectedNumbers.map((item) => +item);
+              ap = ap.sort((a, b) => a - b);
+              if (this.existe(gameIndex) === true) {
+                alert('Você já fez essa aposta. Por favor escolha novamente!');
+                // eslint-disable-next-line no-unreachable
+                selectedNumbers.splice(0, selectedNumbers.length);
+                ap.splice(0, selectedNumbers.length);
+                console.log(ap, selectedNumbers);
+                this.createTableButtons(gameIndex);
+              } else {
+                // eslint-disable-next-line no-new-object
+                apostas.push(new Object({
+                  name: gameData[gameIndex].type,
+                  aposta: ap,
+                }));
+                this.createCartItem(gameIndex);
+                selectedNumbers.splice(0, selectedNumbers.length);
+                this.createTableButtons(gameIndex);
+              }
             });
             // eslint-disable-next-line no-loop-func
             $clearGame.addEventListener('click', () => {
               selectedNumbers.splice(0, selectedNumbers.length);
               this.createTableButtons(gameIndex);
             });
-            // eslint-disable-next-line no-loop-func
+            // eslint-disable-next-line no-loop-func,consistent-return
             $addToCard.addEventListener('click', () => {
               if (selectedNumbers.length === gameData[gameIndex]['max-number']) {
                 const $cart = document.querySelector('.cart');
@@ -234,10 +272,23 @@
                   const $emptyMensage = document.querySelector('.emptyMensage');
                   $cart.removeChild($emptyMensage);
                 }
-                selectedNumbers = selectedNumbers.sort();
-                this.createCartItem(gameIndex);
-                selectedNumbers.splice(0, selectedNumbers.length);
-                this.createTableButtons(gameIndex);
+                ap = selectedNumbers.map((item) => +item);
+                ap = ap.sort((a, b) => a - b);
+                if (this.existe(gameIndex)) {
+                  alert('Você já fez essa aposta. Por favor escolha novamente!');
+                  // eslint-disable-next-line no-unreachable
+                  selectedNumbers.splice(0, selectedNumbers.length);
+                  this.createTableButtons(gameIndex);
+                } else {
+                  // eslint-disable-next-line no-new-object
+                  apostas.push(new Object({
+                    name: gameData[gameIndex].type,
+                    aposta: ap,
+                  }));
+                  this.createCartItem(gameIndex);
+                  selectedNumbers.splice(0, selectedNumbers.length);
+                  this.createTableButtons(gameIndex);
+                }
               } else {
                 alert(`Escolha mais ${(gameData[gameIndex]['max-number']) - (selectedNumbers.length)} números`);
               }
