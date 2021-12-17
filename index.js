@@ -1,3 +1,4 @@
+/* eslint-disable */
 (() => {
   const App = () => {
     const $total = document.querySelector('[ data-js="total"]');
@@ -84,7 +85,6 @@
 
       createTopButtons() {
         const $topButtonDiv = document.querySelector('.topButtons');
-        console.log(gameData.length);
         gameData.forEach((item, index) => {
           const $button = this.newElement('button');
           $button.setAttribute('data-js', `select${item.type}`);
@@ -137,7 +137,6 @@
       }, */
 
       createCartItem(gameIndex) {
-        console.log(apostas);
         const $cart = document.querySelector('.cart');
         const $cartItem = this.newElement('div');
         const $button = this.newElement('button');
@@ -166,20 +165,22 @@
         $cartItem.appendChild($cartItemDetails);
         $cart.appendChild($cartItem);
 
-        console.log(console.log($cartItem));
+
         $button.addEventListener('click', () => {
           valorTotal -= gameData[gameIndex].price;
           $total.textContent = valorTotal.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' });
-          /* // eslint-disable-next-line max-len
-          console.log(this.getId(gameIndex));
-          apostas.splice((this.getId(gameIndex)), 1);
-          console.log(apostas); */
-          $cartItem.parentNode.removeChild($cartItem);
 
+          apostas.map((item) =>{
+            if (item.aposta.toString() === $numbers.textContent){
+              const id = apostas.findIndex((elem)=> elem.aposta.toString() === $numbers.textContent);
+              apostas.splice(id, 1);
+            }
+
+          })
+          $cartItem.parentNode.removeChild($cartItem);
           this.cartIsEmpty();
         });
       },
-
       completeGame(gameIndex) {
         const btns = document.querySelectorAll('.buttonNumberTable');
         btns.forEach((item) => {
@@ -202,7 +203,7 @@
         ap = selectedNumbers.map((item) => +item);
         ap = ap.sort((a, b) => a - b);
 
-        console.log(selectedNumbers);
+
       },
 
       existe(gameIndex) {
@@ -240,11 +241,9 @@
               const id = selectedNumbers.findIndex((elem) => elem === +($button.textContent));
               e.target.style.backgroundColor = '#ADC0C4';
               selectedNumbers.splice(id, 1);
-              console.log(selectedNumbers);
             } else if (selectedNumbers.every((elem) => elem !== +($button.textContent))) {
               e.target.style.backgroundColor = this.activeButtonColor(gameIndex);
               selectedNumbers.push($button.textContent);
-              console.log(selectedNumbers);
             }
           });
           $button.appendChild(text);
