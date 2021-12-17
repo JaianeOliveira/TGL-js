@@ -124,14 +124,18 @@
         $div.appendChild($clearGame);
         $div.appendChild($addToCard);
       },
+
       /*   getId(gameIndex) {
         // eslint-disable-next-line max-len
-        const id = apostas.findIndex((item) => item.aposta.every((elem, index) => elem === +(selectedNumbers[index]) && item.name === gameData[gameIndex].type));
+        // eslint-disable-next-line max-len
+        const id = apostas.findIndex((item) => item.aposta.every((elem, index) => elem ===
+        +(selectedNumbers[index]) && item.name === gameData[gameIndex].type));
         if (id === -1) {
           return 0;
         }
         return id;
       }, */
+
       createCartItem(gameIndex) {
         console.log(apostas);
         const $cart = document.querySelector('.cart');
@@ -186,6 +190,15 @@
             count += 1;
           }
         }
+        const btn = document.querySelectorAll('.buttonNumberTable');
+        selectedNumbers.forEach((num) => {
+          btn.forEach((elem) => {
+            if (elem.getAttribute('value') === num) {
+              // eslint-disable-next-line no-param-reassign
+              elem.style.backgroundColor = gameData[gameIndex].color;
+            }
+          });
+        });
       },
 
       existe(gameIndex) {
@@ -212,17 +225,28 @@
           // eslint-disable-next-line consistent-return,no-loop-func
           $button.addEventListener('click', (e) => {
             if (selectedNumbers.length >= gameData[gameIndex]['max-number']) {
+              if (selectedNumbers.some((elem) => elem === $button.textContent)) {
+                const id = selectedNumbers.findIndex((elem) => elem === $button.textContent);
+                e.target.style.backgroundColor = '#ADC0C4';
+                return selectedNumbers.splice(id, 1);
+              }
               return alert('Quantidade máxima selecionada!');
             }
-            if (selectedNumbers.every((elem) => elem !== $button.textContent)) {
-              e.currentTarget.style.backgroundColor = this.activeButtonColor(gameIndex);
-              return selectedNumbers.push($button.textContent);
+            if (selectedNumbers.some((elem) => elem === $button.textContent)) {
+              const id = selectedNumbers.findIndex((elem) => elem === $button.textContent);
+              e.target.style.backgroundColor = '#ADC0C4';
+              selectedNumbers.splice(id, 1);
+              console.log(selectedNumbers);
+            } else if (selectedNumbers.every((elem) => elem !== $button.textContent)) {
+              e.target.style.backgroundColor = this.activeButtonColor(gameIndex);
+              selectedNumbers.push($button.textContent);
+              console.log(selectedNumbers);
             }
-            return alert('Esse número já está selecionado');
           });
           $button.appendChild(text);
           $td.appendChild($button);
           $button.className = 'buttonNumberTable';
+          $button.setAttribute('value', count);
           $tr.appendChild($td);
           count += 1;
           $tbody.appendChild($tr);
