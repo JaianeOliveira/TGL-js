@@ -184,9 +184,9 @@ h1 {
 .cart{
     overflow: auto;
 }
-.cart::-webkit-scrollbar {
-    display: none;
-}
+/*.cart::-webkit-scrollbar {*/
+/*    display: none;*/
+/*}*/
 .cartContainer {
     display: flex;
     max-height: 465px;
@@ -219,7 +219,7 @@ h1 {
     height: 86px;
     padding-right: 15px;
     padding-left: 15px;
-    margin-bottom: 20px;
+    margin-bottom: 15px;
 }
 
 .cartItem button {
