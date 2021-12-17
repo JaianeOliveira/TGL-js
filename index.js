@@ -201,6 +201,8 @@
         });
         ap = selectedNumbers.map((item) => +item);
         ap = ap.sort((a, b) => a - b);
+
+        console.log(selectedNumbers);
       },
 
       existe(gameIndex) {
@@ -227,19 +229,19 @@
           // eslint-disable-next-line consistent-return,no-loop-func
           $button.addEventListener('click', (e) => {
             if (selectedNumbers.length >= gameData[gameIndex]['max-number']) {
-              if (selectedNumbers.some((elem) => elem === $button.textContent)) {
-                const id = selectedNumbers.findIndex((elem) => elem === $button.textContent);
+              if (selectedNumbers.some((elem) => elem === +($button.textContent))) {
+                const id = selectedNumbers.findIndex((elem) => elem === +($button.textContent));
                 e.target.style.backgroundColor = '#ADC0C4';
                 return selectedNumbers.splice(id, 1);
               }
               return alert('Quantidade máxima selecionada!');
             }
-            if (selectedNumbers.some((elem) => elem === $button.textContent)) {
-              const id = selectedNumbers.findIndex((elem) => elem === $button.textContent);
+            if (selectedNumbers.some((elem) => elem === +($button.textContent))) {
+              const id = selectedNumbers.findIndex((elem) => elem === +($button.textContent));
               e.target.style.backgroundColor = '#ADC0C4';
               selectedNumbers.splice(id, 1);
               console.log(selectedNumbers);
-            } else if (selectedNumbers.every((elem) => elem !== $button.textContent)) {
+            } else if (selectedNumbers.every((elem) => elem !== +($button.textContent))) {
               e.target.style.backgroundColor = this.activeButtonColor(gameIndex);
               selectedNumbers.push($button.textContent);
               console.log(selectedNumbers);
