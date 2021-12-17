@@ -181,6 +181,11 @@
       },
 
       completeGame(gameIndex) {
+        const btns = document.querySelectorAll('.buttonNumberTable');
+        btns.forEach((item) => {
+          // eslint-disable-next-line no-param-reassign
+          item.style.backgroundColor = '#ADC0C4';
+        });
         selectedNumbers.splice(0, selectedNumbers.length);
         let count = 1;
         while (count <= gameData[gameIndex]['max-number']) {
@@ -190,15 +195,12 @@
             count += 1;
           }
         }
-        const btn = document.querySelectorAll('.buttonNumberTable');
         selectedNumbers.forEach((num) => {
-          btn.forEach((elem) => {
-            if (elem.getAttribute('value') === num) {
-              // eslint-disable-next-line no-param-reassign
-              elem.style.backgroundColor = gameData[gameIndex].color;
-            }
-          });
+          const btn = document.querySelector(`[value="${num}"]`);
+          btn.style.backgroundColor = gameData[gameIndex].color;
         });
+        ap = selectedNumbers.map((item) => +item);
+        ap = ap.sort((a, b) => a - b);
       },
 
       existe(gameIndex) {
@@ -254,33 +256,7 @@
           if (count === 25) {
             // eslint-disable-next-line no-loop-func
             $completeGame.addEventListener('click', () => {
-              const $cart = document.querySelector('.cart');
-              const $cartItem = document.querySelector('.cartItem');
-              if ($cartItem === null) {
-                const $emptyMensage = document.querySelector('.emptyMensage');
-                $cart.removeChild($emptyMensage);
-              }
               this.completeGame(gameIndex);
-
-              ap = selectedNumbers.map((item) => +item);
-              ap = ap.sort((a, b) => a - b);
-              if (this.existe(gameIndex) === true) {
-                alert('Você já fez essa aposta. Por favor escolha novamente!');
-                // eslint-disable-next-line no-unreachable
-                selectedNumbers.splice(0, selectedNumbers.length);
-                ap.splice(0, selectedNumbers.length);
-                console.log(ap, selectedNumbers);
-                this.createTableButtons(gameIndex);
-              } else {
-                // eslint-disable-next-line no-new-object
-                apostas.push(new Object({
-                  name: gameData[gameIndex].type,
-                  aposta: ap,
-                }));
-                this.createCartItem(gameIndex);
-                selectedNumbers.splice(0, selectedNumbers.length);
-                this.createTableButtons(gameIndex);
-              }
             });
             // eslint-disable-next-line no-loop-func
             $clearGame.addEventListener('click', () => {
